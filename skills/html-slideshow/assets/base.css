@@ -1,0 +1,409 @@
+:root {
+    --font-display: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    --font-body:
+        ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif;
+    --font-mono:
+        ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --chrome: clamp(0.8rem, 1.6svh, 1.25rem);
+}
+[data-theme="dark"] {
+    --bg: #0e1116;
+    --fg: #e7ecf3;
+    --muted: #9aa6b2;
+    --accent: #7dd3fc;
+    --code-bg: #0b0e13;
+    --rule: rgba(255, 255, 255, 0.12);
+    --chrome-bg: rgba(14, 17, 22, 0.72);
+    --chrome-fg: #cdd6e0;
+}
+[data-theme="light"] {
+    --bg: #fbfbfa;
+    --fg: #1a1d21;
+    --muted: #5b6470;
+    --accent: #0369a1;
+    --code-bg: #f0eeea;
+    --rule: rgba(0, 0, 0, 0.12);
+    --chrome-bg: rgba(255, 255, 255, 0.72);
+    --chrome-fg: #3a414c;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+html {
+    background: var(--bg);
+}
+body {
+    height: 100svh;
+    color: var(--fg);
+    font-family: var(--font-body);
+    overflow: hidden;
+    -webkit-text-size-adjust: 100%;
+}
+@supports not (height: 100svh) {
+    body {
+        height: 100vh;
+    }
+}
+
+.deck {
+    height: 100svh;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+.deck::-webkit-scrollbar {
+    display: none;
+}
+@supports not (height: 100svh) {
+    .deck {
+        height: 100vh;
+    }
+}
+
+.slide {
+    flex: 0 0 100%;
+    height: 100svh;
+    scroll-snap-align: start;
+    container-type: size;
+    container-name: slide;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(1rem, 3cqh, 3.5rem);
+    padding: clamp(1.5rem, 7cqw, 7rem);
+    background: var(--bg);
+    color: var(--fg);
+}
+@supports not (height: 100svh) {
+    .slide {
+        height: 100vh;
+    }
+}
+
+.slide--center {
+    align-items: center;
+    text-align: center;
+}
+.slide--top {
+    justify-content: flex-start;
+}
+.slide--bottom {
+    justify-content: flex-end;
+}
+.slide--full {
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.slide h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 7cqw, 8rem);
+    line-height: 1.05;
+    margin: 0;
+}
+.slide h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.6rem, 5cqw, 5rem);
+    line-height: 1.1;
+    margin: 0;
+}
+.slide h3 {
+    font-weight: 600;
+    font-size: clamp(1.2rem, 3.4cqw, 3rem);
+    line-height: 1.2;
+    margin: 0;
+}
+.slide p,
+.slide li {
+    font-size: clamp(1rem, 2.6cqw, 2.4rem);
+    line-height: 1.45;
+}
+.slide ul,
+.slide ol {
+    margin: 0;
+    padding-left: 1.4em;
+}
+.slide .lead {
+    color: var(--muted);
+    font-size: clamp(1rem, 2cqw, 1.8rem);
+}
+.slide a {
+    color: var(--accent);
+}
+.slide code,
+.slide pre {
+    font-family: var(--font-mono);
+}
+.slide pre {
+    width: 100%;
+    overflow: auto;
+    margin: 0;
+    background: var(--code-bg);
+    border: 0.0625rem solid var(--rule);
+    border-radius: 0.5em;
+    padding: clamp(0.8rem, 2cqw, 2rem);
+    font-size: clamp(0.85rem, 2cqw, 1.7rem);
+    line-height: 1.4;
+    white-space: pre;
+}
+.slide :is(figure) {
+    margin: 0;
+}
+.slide img,
+.slide video,
+.slide svg {
+    max-width: 100%;
+    max-height: 78cqh;
+    height: auto;
+    object-fit: contain;
+}
+.slide blockquote {
+    margin: 0;
+    border-left: 0.12em solid var(--accent);
+    padding-left: clamp(0.8rem, 2cqw, 2rem);
+    font-family: var(--font-display);
+}
+.slide .stat {
+    font-size: clamp(3rem, 16cqw, 16rem);
+    font-weight: 800;
+    line-height: 1;
+}
+.slide hr {
+    width: 100%;
+    border: 0;
+    border-top: 0.0625rem solid var(--rule);
+}
+
+.cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(28cqw, 1fr));
+    gap: clamp(1rem, 3cqw, 3rem);
+    width: 100%;
+    align-items: center;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 0.18em solid var(--accent);
+    outline-offset: 0.18em;
+}
+
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.35em;
+    z-index: 20;
+    background: transparent;
+    pointer-events: none;
+}
+.progress > span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    transition: width 0.25s ease;
+}
+
+.controls {
+    position: fixed;
+    bottom: clamp(0.6rem, 2svh, 1.6rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.6svh, 1.2rem);
+    font-size: var(--chrome);
+    background: var(--chrome-bg);
+    color: var(--chrome-fg);
+    padding: 0.5em 0.8em;
+    border-radius: 99em;
+    backdrop-filter: blur(0.4em);
+    -webkit-backdrop-filter: blur(0.4em);
+    border: 0.0625rem solid var(--rule);
+}
+.controls > button {
+    font-size: 1.5em;
+    line-height: 1;
+    width: 1.6em;
+    height: 1.6em;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.controls > button:hover {
+    background: var(--rule);
+}
+.counter {
+    font-variant-numeric: tabular-nums;
+    min-width: 3.2em;
+    text-align: center;
+}
+.controls .spacer {
+    width: 0.06em;
+    height: 1.4em;
+    background: var(--rule);
+}
+
+.dots {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+.dots button {
+    width: 1em;
+    height: 1em;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+.dots button::after {
+    content: "";
+    position: absolute;
+    inset: 28%;
+    border-radius: 50%;
+    background: var(--rule);
+    transition:
+        background 0.2s,
+        inset 0.2s;
+}
+.dots button:hover::after {
+    background: var(--chrome-fg);
+}
+.dots button[aria-current="true"]::after {
+    background: var(--accent);
+    inset: 14%;
+}
+.dots-ell {
+    color: var(--chrome-fg);
+    opacity: 0.45;
+    font-size: 0.85em;
+    line-height: 1;
+    user-select: none;
+}
+
+.deck.is-overview {
+    scroll-snap-type: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    padding: clamp(0.8rem, 2svh, 1.6rem);
+    gap: clamp(0.6rem, 1.6svh, 1.2rem);
+}
+.deck.is-overview > .slide {
+    flex: 0 0 auto;
+    width: 100vw;
+    height: 100svh;
+    zoom: 0.31;
+    margin: 0;
+    outline: 0.0625rem solid var(--rule);
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+        outline-color 0.2s,
+        transform 0.2s;
+}
+.deck.is-overview > .slide:hover {
+    outline-color: var(--accent);
+    transform: translateY(-0.4svh);
+}
+.deck.is-overview > .slide.is-active {
+    outline-color: var(--accent);
+    outline-width: 0.16rem;
+}
+
+:fullscreen .controls {
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+:fullscreen .controls:hover {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .deck,
+    .progress > span,
+    .dots button {
+        scroll-behavior: auto;
+        transition: none;
+    }
+}
+@media print {
+    html,
+    body {
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+    .deck {
+        display: block;
+        overflow: visible;
+        height: auto;
+        scroll-snap-type: none;
+    }
+    .slide {
+        position: relative;
+        height: auto;
+        min-height: 98vh;
+        page-break-after: always;
+        opacity: 1 !important;
+        padding: 6%;
+        background: #fff !important;
+        color: #111 !important;
+    }
+    .slide pre {
+        background: #f4f4f4 !important;
+    }
+    .slide .lead {
+        color: #444 !important;
+    }
+    .progress,
+    .controls,
+    .dots {
+        display: none;
+    }
+}
+
+.hint {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 25;
+    font-size: var(--chrome);
+    color: var(--chrome-fg);
+    background: var(--chrome-bg);
+    border: 0.0625rem solid var(--rule);
+    padding: 0.4em 0.7em;
+    border-radius: 0.5em;
+    backdrop-filter: blur(0.4em);
+    opacity: 0.92;
+}

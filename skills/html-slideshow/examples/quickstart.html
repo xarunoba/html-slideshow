@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>Quickstart — html-slideshow</title>
+  <link rel="stylesheet" href="../assets/base.css">
+</head>
+<body>
+
+  <main class="deck" id="deck" role="region" aria-label="Slideshow" tabindex="0">
+
+    <section class="slide slide--center">
+      <p class="lead">html-slideshow</p>
+      <h1>Make slides&nbsp;in HTML</h1>
+      <p class="lead">Drop a &lt;section&gt; in, that&rsquo;s a slide.</p>
+    </section>
+
+    <section class="slide">
+      <h2>One idea per slide</h2>
+      <ul>
+        <li>Large, fluid type scales to any screen</li>
+        <li>Navigate with keys, click, or touch</li>
+        <li>Self-contained: one <code>.html</code> file</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Two columns</h2>
+      <div class="cols">
+        <div>
+          <h3>Left</h3>
+          <p>Layouts use CSS grid with <code>fr</code> and <code>%</code> &mdash; no fixed pixels.</p>
+        </div>
+        <div>
+          <h3>Right</h3>
+          <p>Columns collapse automatically when the slide is narrow, via <code>@container</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide--center">
+      <span class="stat">100%</span>
+      <p class="lead">responsive by construction &mdash; phone to projector</p>
+    </section>
+
+    <section class="slide">
+      <h2>Code blocks</h2>
+<pre><code>function nextSlide() {
+  // arrow keys, space, swipe, or click all call this
+  goTo(current + 1);
+}</code></pre>
+    </section>
+
+    <section class="slide slide--center">
+      <blockquote>
+        <p>Design for the back row: large type, high contrast, one thought per slide.</p>
+      </blockquote>
+    </section>
+
+    <section class="slide slide--center">
+      <h1>Thank you</h1>
+      <p class="lead">Press <kbd>O</kbd> for overview &middot; <kbd>F</kbd> for fullscreen</p>
+    </section>
+
+  </main>
+
+  <div class="progress" id="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <div class="controls" id="controls" role="group" aria-label="Slide controls">
+    <button id="prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5 5.5 8 10 12.5"/></svg></button>
+    <div class="dots" id="dots" role="tablist" aria-label="Go to slide"></div>
+    <span class="counter" id="counter" aria-live="polite">1 / 1</span>
+    <button id="next" type="button" aria-label="Next slide"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
+    <span class="spacer" aria-hidden="true"></span>
+    <button id="fs"   type="button" aria-label="Toggle fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg></button>
+    <button id="ov"   type="button" aria-label="Toggle overview" title="Overview (O)"><svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="4.5" height="4.5" rx="1"/><rect x="9.5" y="2" width="4.5" height="4.5" rx="1"/><rect x="2" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="9.5" y="9.5" width="4.5" height="4.5" rx="1"/></svg></button>
+  </div>
+
+  <p class="hint" id="hint" hidden>&larr; &rarr; to navigate &middot; <b>F</b> fullscreen &middot; <b>O</b> overview</p>
+
+  <script src="../assets/base.js" defer></script>
+</body>
+</html>
