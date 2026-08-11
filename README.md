@@ -6,11 +6,13 @@ A skill that lets any AI agent build a
 Each slide is one `<section>`. The engine (layout, keyboard / click / touch
 navigation, fullscreen, overview, hash deep-links, print-to-PDF) lives in
 `base.css` + `base.js`; a Bun build bundles + minifies everything into one file
-that opens in any browser. **Requires [Bun](https://bun.sh).**
+that opens in any browser.
+
+**Requires [Bun](https://bun.sh) as a runtime dependency.**
 
 ## Install
 
-Not on a registry — it's just files. Clone it:
+Clone it:
 
 ```sh
 git clone https://github.com/xarunoba/html-slideshow.git
@@ -19,8 +21,6 @@ git clone https://github.com/xarunoba/html-slideshow.git
 Then make `skills/html-slideshow/` available to your agent as the
 `html-slideshow` skill (how you do that depends on your harness — point it at
 the directory, or copy/symlink it into wherever your agent loads skills from).
-The only runtime dependency is [Bun](https://bun.sh)
-(`curl -fsSL https://bun.sh/install | bash`).
 
 ## Use
 
