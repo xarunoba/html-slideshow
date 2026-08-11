@@ -10,13 +10,8 @@ The engine is three files: `assets/base.html` (page skeleton + your slides),
 1. **Copy the template** — copy `base.html`, `base.css`, and `base.js` into your
    deck folder (side by side). You can rename the `.html` (e.g. `my-deck.html`);
    the CSS/JS are referenced by relative path.
-2. **Theme** — set `data-theme` on `<html>`:
-   ```html
-   <html lang="en" data-theme="dark">   <!-- or data-theme="light" -->
-   ```
-   Dark and light are equal peers; pick the one that fits the venue.
-3. **Title** — edit `<title>`.
-4. **Slides** — inside `<main id="deck">`, add one `<section class="slide">` per
+2. **Title** — edit `<title>`.
+3. **Slides** — inside `<main id="deck">`, add one `<section class="slide">` per
    slide (the deck ships empty; see `../examples/` for filled decks).
 
 ## The slide contract
@@ -76,4 +71,4 @@ shareable and can link to each other.
 
 - **Present:** open the built `.html` in any browser; press `F` for fullscreen.
 - **Handout:** print or save as PDF — one slide per page, chrome hidden, **forced
-  to a light, ink-friendly palette** (a dark deck still prints readable).
+  to a light, ink-friendly palette** for readability.

@@ -13,8 +13,8 @@ produce the final file. **Requires [Bun](https://bun.sh).**
 
 1. **Copy the template** — copy `assets/base.html`, `assets/base.css`, and
    `assets/base.js` into your deck folder (side by side; you can rename them as you please).
-2. **Set title + theme** — in the `.html`, edit `<title>` and `data-theme` on
-   `<html>` (`dark` or `light` — equal peers).
+2. **Set title** — in the `.html`, edit `<title>`. The deck renders dark by
+   default; printing switches to a forced light palette automatically.
 3. **Add slides** — in `<main id="deck">`, one `<section class="slide">` per slide:
    ```html
    <section class="slide">

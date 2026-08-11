@@ -11,7 +11,7 @@ documentation) plus a build step. These files are **modifiable templates** you c
 
 ## base.html — skeleton
 
-- `<html data-theme="dark|light">` — theme switch (tokens below do the rest).
+- `<html lang="en">` — root. Dark palette by default (`:root` tokens); `@media print` forces a light palette.
 - `<head>` — meta, `<link rel="stylesheet" href="base.css">`, `<title>`.
 - `<main class="deck" id="deck">` — horizontal scroll container. **Direct children
   must be `<section class="slide">`.** Empty by default.
@@ -23,7 +23,7 @@ documentation) plus a build step. These files are **modifiable templates** you c
 
 | Section | Selectors | Notes |
 |---|---|---|
-| **Design tokens** | `:root`, `[data-theme="dark|light"]` | `--font-*`, `--chrome`, `--slide-w`/`--slide-h` (portrait canvas ratio); per theme `--bg --fg --muted --accent --code-bg --rule --chrome-bg --chrome-fg`. **Restyle here, not elsewhere.** |
+| **Design tokens** | `:root` | `--font-*`, `--chrome`, `--slide-w`/`--slide-h` (portrait canvas ratio); palette `--page-bg --bg --fg --muted --accent --code-bg --rule --chrome-bg --chrome-fg`. **Restyle here, not elsewhere.** |
 | **Reset / frame** | `html,body` | `100svh` (+ `100vh` `@supports` fallback). |
 | **Deck** | `.deck` | `display:flex`; `scroll-snap-type:x mandatory`; `scroll-behavior:smooth`; hidden scrollbar; **`container-type:size`** (named `deck`, so its orientation can be queried). |
 | **Slide** | `.slide` | `flex:0 0 100%`; `scroll-snap-align:start`; **`container-type:size`** (so `cqw`/`cqh` resolve to the slide). Helpers: `.slide--center/-top/-bottom/-full`. |
@@ -34,7 +34,7 @@ documentation) plus a build step. These files are **modifiable templates** you c
 | **Chrome** | `.progress`, `.controls` (+ `> button` flex-centered icons), `.counter`, `.dots` (pseudo-element dots), `.dots-ell` | dots are a `::after` circle on a 1em hit area. |
 | **Overview** | `.deck.is-overview`, `.deck.is-overview > .slide` | disables snap; lays slides as `zoom:.31` thumbnails. |
 | **Fullscreen** | `:fullscreen .controls` | auto-hide the control pill on hover (dots live inside it). |
-| **Motion + print** | `@media (prefers-reduced-motion)`, `@media print` | reduced motion → instant; print → one slide per page, chrome hidden, **light/ink-friendly palette forced (white bg, dark text) regardless of theme**. |
+| **Motion + print** | `@media (prefers-reduced-motion)`, `@media print` | reduced motion → instant; print → one slide per page, chrome hidden, **forced light/ink-friendly palette (white bg, dark text)**. |
 | **Hint** | `.hint` | first-load key reminder. |
 
 ## base.js — modules (one IIFE)
@@ -81,8 +81,8 @@ assets into the `.html`, minified, emitting one self-contained file.
 
 ## Common changes
 
-- **New theme** → add a `[data-theme="x"]` block with the tokens. **Print stays
-  light automatically** — the `@media print` block forces white bg + dark text.
+- **Recolor** → edit the `:root` palette tokens (`--bg`, `--fg`, …). **Print
+  stays light automatically** — the `@media print` block forces white bg + dark text.
 - **Chrome size** → `--chrome` and the `.controls > button` em sizes.
 - **Dot cap** → `MAX_DOTS`.
 - **Overview thumbnail size** → `.deck.is-overview > .slide { zoom }`.

@@ -12,10 +12,10 @@
        resolution and zoom to fit — set both to change it (e.g. 4 / 3). */
     --slide-w: 16;
     --slide-h: 9;
-}
-[data-theme="dark"] {
+
     /* Page frame / letterbox — darker than the slide canvas (--bg) so a
-       slide's edges stay visible when it is letterboxed (e.g. portrait). */
+       slide's edges stay visible when it is letterboxed (e.g. portrait).
+       Print overrides these (see @media print). */
     --page-bg: #000000;
     --bg: #0e1116;
     --fg: #e7ecf3;
@@ -25,17 +25,6 @@
     --rule: rgba(255, 255, 255, 0.12);
     --chrome-bg: rgba(14, 17, 22, 0.72);
     --chrome-fg: #cdd6e0;
-}
-[data-theme="light"] {
-    --page-bg: #cfccc5;
-    --bg: #fbfbfa;
-    --fg: #1a1d21;
-    --muted: #5b6470;
-    --accent: #0369a1;
-    --code-bg: #f0eeea;
-    --rule: rgba(0, 0, 0, 0.12);
-    --chrome-bg: rgba(255, 255, 255, 0.72);
-    --chrome-fg: #3a414c;
 }
 
 *,
