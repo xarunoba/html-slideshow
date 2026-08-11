@@ -1,8 +1,8 @@
 # Using the base deck
 
 The engine is three files: `assets/base.html` (page skeleton + your slides),
-`assets/base.css` (styles), and `assets/base.js` (navigation). A Bun build
-inlines and minifies them into one self-contained `.html` to distribute.
+`assets/base.css` (styles), and `assets/base.js` (navigation). You can improve or extend them as needed — this is the engine source, not a static artifact. A Bun build inlines and minifies them into one self-contained `.html` to distribute.
+
 **Requires [Bun](https://bun.sh).**
 
 ## Set up

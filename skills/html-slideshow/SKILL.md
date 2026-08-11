@@ -12,8 +12,7 @@ produce the final file. **Requires [Bun](https://bun.sh).**
 ## Workflow
 
 1. **Copy the template** — copy `assets/base.html`, `assets/base.css`, and
-   `assets/base.js` into your deck folder (side by side; you can rename the
-   `.html`).
+   `assets/base.js` into your deck folder (side by side; you can rename them as you please).
 2. **Set title + theme** — in the `.html`, edit `<title>` and `data-theme` on
    `<html>` (`dark` or `light` — equal peers).
 3. **Add slides** — in `<main id="deck">`, one `<section class="slide">` per slide:
@@ -36,6 +35,13 @@ produce the final file. **Requires [Bun](https://bun.sh).**
    and any referenced assets inlined. **This is the file you distribute.**
 6. **Verify** the **built** file in a browser: arrow keys step; narrow the window;
    `O` overview; `F` fullscreen; print preview (one slide per page).
+7. **Clean up** — remove the template files (`base.html`, `base.css`, `base.js`)
+   and any intermediate artifacts, leaving only `dist/my-deck.html` for
+   distribution. You can do this manually or with a script:
+   ```bash
+   rm base.html base.css base.js
+   rm -rf dist  # Rebuild if you need the built file again
+   ```
 
 ## Reference index
 

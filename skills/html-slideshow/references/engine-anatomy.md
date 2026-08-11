@@ -1,7 +1,6 @@
 # Engine anatomy
-
-The engine is three source files plus a build step (all source files are
-comment-free; this map is the documentation):
+The engine consists of three source files (comment-free; this map is the
+documentation) plus a build step. These files are **modifiable templates** you can improve as needed:
 
 - `assets/base.html` — page skeleton: `<head>`, `<main id="deck">` (empty — slides
   go here), and the chrome. Links `base.css` and `base.js`.
