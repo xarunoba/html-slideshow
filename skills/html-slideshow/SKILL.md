@@ -12,7 +12,7 @@ produce the final file. **Requires [Bun](https://bun.sh).**
 ## Workflow
 
 1. **Copy the template** — copy `assets/base.html`, `assets/base.css`, and
-   `assets/base.js` into your deck folder (side by side; you can rename them as you please).
+   `assets/base.js` into a temporary folder (side by side; you can rename them as you please).
 2. **Set title** — in the `.html`, edit `<title>`. The deck renders dark by
    default; printing switches to a forced light palette automatically.
 3. **Add slides** — in `<main id="deck">`, one `<section class="slide">` per slide:
@@ -22,7 +22,13 @@ produce the final file. **Requires [Bun](https://bun.sh).**
      <ul><li>Revenue up 24%</li></ul>
    </section>
    ```
-4. **Size with container units — never `px`.** Each slide is a CSS query
+4. **Custom CSS/JS go in `base.css` / `base.js` — never inline.** Put custom
+   styles in `base.css` and custom scripts in `base.js`. Do **not** add `<style>`
+   or `<script>` blocks to the `.html` — it holds only the page skeleton and
+   slide content; the build inlines the linked CSS/JS into the final
+   self-contained file. Keeping them separate keeps the source editable and the
+   engine single-source. (Recipes in `references/slide-patterns.md` follow this.)
+5. **Size with container units — never `px`.** Each slide is a CSS query
    container, so use `cqw`/`cqh`/`cqmin` and `clamp()` and content scales to any
    screen. `px`/`pt` break responsiveness — don't use them (the outer frame uses
    `svh`). This is the one rule agents get wrong; full guide in
@@ -30,12 +36,12 @@ produce the final file. **Requires [Bun](https://bun.sh).**
    Portrait viewports are handled for you: slides render at their landscape
    canvas and scale to fit, so wide tables/grids never overflow a phone screen
    (`--slide-w`/`--slide-h` on `:root`, default `16`/`9`).
-5. **Build** — `bun build --compile --target=browser --minify my-deck.html --outdir dist` →
+6. **Build** — `bun build --compile --target=browser --minify my-deck.html --outdir dist` →
    `dist/my-deck.html`: a single, minified, self-contained file with the CSS, JS,
    and any referenced assets inlined. **This is the file you distribute.**
-6. **Verify** the **built** file in a browser: arrow keys step; narrow the window;
+7. **Verify** the **built** file in a browser: arrow keys step; narrow the window;
    `O` overview; `F` fullscreen; print preview (one slide per page).
-7. **Clean up** — remove the template files (`base.html`, `base.css`, `base.js`)
+8. **Clean up** — remove the template files (`base.html`, `base.css`, `base.js`)
    and any intermediate artifacts, leaving only `dist/my-deck.html` for
    distribution. You can do this manually or with a script:
    ```bash

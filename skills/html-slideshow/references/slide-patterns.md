@@ -115,12 +115,15 @@ the sources slide. See "Deep linking" in `using-the-deck.md`.
 
 ## Custom slide variant
 
-Add your own layout by scoping a class under `.slide`, using container units:
+Add your own layout by scoping a class under `.slide` in **`base.css`** (never an
+inline `<style>` block in the `.html`), using container units:
+```css
+/* base.css */
+.slide.split { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqw; align-items: center; }
+.slide.split .pane { font-size: clamp(1rem, 2.6cqw, 2.2rem); }
+```
+Then use it on a slide:
 ```html
-<style>
-  .slide.split { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqw; align-items: center; }
-  .slide.split .pane { font-size: clamp(1rem, 2.6cqw, 2.2rem); }
-</style>
 <section class="slide split">
   <div class="pane">Left</div>
   <div class="pane">Right</div>
@@ -132,6 +135,9 @@ Keep every size relative (`cqw`/`cqh`/`clamp`/`fr`/`%`) — never `px`.
 
 - **One idea per slide.** Design for the back row: large type, high contrast, a
   single takeaway.
-- **Custom styles** — scope a class under `.slide` (e.g. `.slide.split`) and use
-  container units; never `px`. Don't repurpose the engine's IDs/classes
-  (`#deck`, `.controls`, …) — `engine-anatomy.md` lists what's load-bearing.
+- **Custom styles** — scope a class under `.slide` (e.g. `.slide.split`) in
+  `base.css` — never an inline `<style>` block in the `.html`. Use container
+  units, never `px`. Don't repurpose the engine's IDs/classes (`#deck`,
+  `.controls`, …) — `engine-anatomy.md` lists what's load-bearing.
+- **Custom scripts** — put behavior in `base.js` (one IIFE — add to it), never an
+  inline `<script>` block in the `.html`.

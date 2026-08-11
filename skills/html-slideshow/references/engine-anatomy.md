@@ -3,7 +3,9 @@ The engine consists of three source files (comment-free; this map is the
 documentation) plus a build step. These files are **modifiable templates** you can improve as needed:
 
 - `assets/base.html` — page skeleton: `<head>`, `<main id="deck">` (empty — slides
-  go here), and the chrome. Links `base.css` and `base.js`.
+  go here), and the chrome. **Links** `base.css` and `base.js` — keep it that
+  way: never inline `<style>`/`<script>` blocks here (the build inlines the
+  linked files into the output).
 - `assets/base.css` — all styles (sections below).
 - `assets/base.js` — all logic (modules below).
 - Build it with `bun build --compile --target=browser --minify` → one
@@ -86,8 +88,9 @@ assets into the `.html`, minified, emitting one self-contained file.
 - **Chrome size** → `--chrome` and the `.controls > button` em sizes.
 - **Dot cap** → `MAX_DOTS`.
 - **Overview thumbnail size** → `.deck.is-overview > .slide { zoom }`.
-- **New slide layout** → a class scoped under `.slide` (container units); add a
-  recipe to `slide-patterns.md`.
+- **New slide layout** → a class scoped under `.slide` in `base.css` (container
+  units, never an inline `<style>` in the `.html`); add a recipe to
+  `slide-patterns.md`.
 - **Keep it responsive** → never introduce `px` (see `responsive-units.md`).
 - **Slide canvas ratio (portrait)** → `--slide-w` / `--slide-h` on `:root`
   (default `16`/`9`). Only affects portrait frames.
