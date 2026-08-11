@@ -384,6 +384,16 @@ button:focus-visible {
     outline-color: var(--accent);
     outline-width: 0.16rem;
 }
+@container deck (orientation: portrait) {
+    /* One column in portrait: each thumbnail fills the content width so slides
+       stay legible instead of shrinking into multiple cramped columns. */
+    .deck.is-overview > .slide {
+        width: 100%;
+        height: auto;
+        aspect-ratio: var(--slide-w) / var(--slide-h);
+        zoom: 1;
+    }
+}
 
 :fullscreen .controls {
     opacity: 0;
