@@ -14,6 +14,8 @@
   const slides = () => Array.from(deck.querySelectorAll(":scope > .slide"));
   let current = 0;
   let navGuard = 0;
+  let snapTimer = null; // fallback timer for the scroll-snap restore
+  let snapEnd = null; // scrollend listener ref, so a later goTo can cancel it
 
   const clampIndex = (i) => {
     const n = slides().length;
@@ -26,11 +28,52 @@
     const idx = clampIndex(i);
     current = idx;
     navGuard = performance.now() + 750;
-    s[idx].scrollIntoView({
-      behavior: smooth === false ? "auto" : "smooth",
-      inline: "start",
-      block: "nearest",
+    const targetSlide = s[idx];
+
+    // CSS scroll-snap-type: x mandatory fights programmatic scrolling on mobile
+    // Chromium (Brave/Edge on Android): the compositor re-clamps the deck's
+    // scroll mid-flight, so Element.scrollIntoView either doesn't move or lands
+    // on the wrong slide — manual touch swipe keeps working. Drive the deck's
+    // own scrollLeft with snap disabled, then restore snap once it settles.
+    const applySnap = () => {
+      deck.style.scrollSnapType = deck.classList.contains("is-overview")
+        ? "none"
+        : "x mandatory";
+    };
+    // cancel any restore still pending from the previous navigation
+    clearTimeout(snapTimer);
+    deck.removeEventListener("scrollend", snapEnd);
+    snapTimer = null;
+    snapEnd = null;
+
+    deck.style.scrollSnapType = "none";
+
+    const delta =
+      targetSlide.getBoundingClientRect().left - deck.getBoundingClientRect().left;
+    deck.scrollTo({
+      left: deck.scrollLeft + delta,
+      top: 0,
+      behavior: smooth === false ? "instant" : "smooth",
     });
+
+    if (smooth === false || Math.abs(delta) <= 1) {
+      // No animation: snap can come straight back.
+      snapTimer = setTimeout(applySnap, 60);
+    } else {
+      // Restore once the smooth scroll fully settles — a fixed timer would cut
+      // a multi-slide jump short and let snap re-clamp it mid-flight. The
+      // fallback covers browsers without a `scrollend` event.
+      snapEnd = () => {
+        deck.removeEventListener("scrollend", snapEnd);
+        snapEnd = null;
+        clearTimeout(snapTimer);
+        snapTimer = null;
+        applySnap();
+      };
+      deck.addEventListener("scrollend", snapEnd, { once: true });
+      snapTimer = setTimeout(snapEnd, 2000);
+    }
+
     setActive(idx);
   }
   const next = () => goTo(current + 1);

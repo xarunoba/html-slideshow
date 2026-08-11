@@ -41,8 +41,13 @@ documentation) plus a build step. These files are **modifiable templates** you c
 
 - **State** — `current` (active index), `navGuard` (timestamp; suppresses the
   IntersectionObserver during programmatic scrolls).
-- **`goTo(i, smooth)`** — core nav. `scrollIntoView` the target + `setActive`.
-  `smooth === false` → instant (used by init, overview-exit, Home/End).
+- **`goTo(i, smooth)`** — core nav. `scrollTo` the deck to the target's left
+  edge (not `scrollIntoView`) + `setActive`. Scroll-snap is disabled for the
+  programmatic move — `scroll-snap-type: x mandatory` fights programmatic
+  scrolling on mobile Chromium (Brave/Edge on Android: the deck lands on the
+  wrong slide or doesn't move; manual swipe is unaffected) — then restored on
+  `scrollend` (timer fallback). `smooth === false` → `"instant"` (used by init,
+  overview-exit, Home/End).
 - **`setActive(idx)`** — writes state to DOM/URL: `.is-active`, ARIA, counter,
   progress bar, `renderDots`, and `history.replaceState` to `#<n>`.
 - **`renderDots(active)`** — windowed dot indicator. `MAX_DOTS` (9): first + last
