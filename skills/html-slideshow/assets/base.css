@@ -14,6 +14,9 @@
     --slide-h: 9;
 }
 [data-theme="dark"] {
+    /* Page frame / letterbox — darker than the slide canvas (--bg) so a
+       slide's edges stay visible when it is letterboxed (e.g. portrait). */
+    --page-bg: #000000;
     --bg: #0e1116;
     --fg: #e7ecf3;
     --muted: #9aa6b2;
@@ -24,6 +27,7 @@
     --chrome-fg: #cdd6e0;
 }
 [data-theme="light"] {
+    --page-bg: #cfccc5;
     --bg: #fbfbfa;
     --fg: #1a1d21;
     --muted: #5b6470;
@@ -45,7 +49,7 @@ body {
     height: 100%;
 }
 html {
-    background: var(--bg);
+    background: var(--page-bg);
 }
 body {
     height: 100svh;
