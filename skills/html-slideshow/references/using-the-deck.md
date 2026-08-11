@@ -31,7 +31,7 @@ inlines and minifies them into one self-contained `.html` to distribute.
 
 ## Build
 
-```
+```sh
 bun build --compile --target=browser --minify my-deck.html --outdir dist   # -> dist/my-deck.html
 ```
 

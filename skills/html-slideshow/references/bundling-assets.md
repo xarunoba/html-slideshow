@@ -32,7 +32,7 @@ For assets you want inline in the **source** itself:
 
 **Data-URI one-liner** — base64 the file, prefix the MIME (portable; `tr` strips
 the newlines `base64` wraps):
-```
+```sh
 echo "data:image/webp;base64,$(base64 photo.webp | tr -d '\n')"
 echo "data:font/woff2;base64,$(base64 font.woff2 | tr -d '\n')"
 ```

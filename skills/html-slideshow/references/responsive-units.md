@@ -4,11 +4,10 @@ The deck must look right on a phone, a laptop, and a 4K projector — and when
 embedded in an iframe. The rule that makes this work: **size everything to the
 slide, not the screen, and never in fixed `px`.**
 
-## 1. The slide is a query container
+## The slide is a query container
 
-Every `.slide` has `container-type: size`, which makes the slide a query
-container. Lengths inside it can be expressed as a fraction of the **slide's own
-box**:
+Every `.slide` declares `container-type: size`, so lengths resolve against the
+**slide's own box**:
 
 | Unit | Resolves to |
 |------|-------------|
@@ -17,15 +16,14 @@ box**:
 | `cqi` / `cqb` | 1% of inline / block size |
 | `cqmin` / `cqmax` | 1% of the smaller / larger dimension |
 
-Because they track the slide (not the browser window), they are correct whether
-the deck is fullscreen, in an iframe, or a resized pane. `vw`/`vh` track the
-**viewport** and break the moment the deck isn't full-window — avoid them inside
-slides.
+They track the slide, not the viewport — so they're correct fullscreen, in an
+iframe, or a resized pane. `vw`/`vh` track the window and break the moment the
+deck isn't full-window; avoid them inside slides.
 
 > `cqw` resolves against the slide's *content box* (after padding), so it already
 > accounts for your slide padding. You don't "lose" space by using it.
 
-## 2. Fluid type with clamp()
+## Fluid type with clamp()
 
 Give each text role a floor, a fluid preferred value, and a ceiling:
 
@@ -41,7 +39,7 @@ Give each text role a floor, a fluid preferred value, and a ceiling:
 
 The deck's defaults already do this for `h1`–`h3`, `p`, `li`, and `code`.
 
-## 3. Spacing & layout
+## Spacing & layout
 
 - Padding / gaps: `cqw` or `em`. e.g. `padding: 6cqw; gap: 2rem;`
 - Grid columns: `fr`, `%`, `minmax()`. The `.cols` helper uses
@@ -55,7 +53,7 @@ The deck's defaults already do this for `h1`–`h3`, `p`, `li`, and `code`.
   `@container` keys off the slide; `@media (max-width)` keys off the window and
   is wrong for an embedded or split-pane deck.
 
-## 4. The outer frame
+## The outer frame
 
 Only the deck's outer frame uses viewport units, and it uses `svh` (small
 viewport height) — the smallest the viewport ever gets, so a slide is never
@@ -68,7 +66,7 @@ body, .deck, .slide { height: 100svh; }   /* base.html ships a 100vh fallback */
 Avoid `dvh`/`lvh` for the frame: they resize as mobile chrome slides in and out
 and make slides jump mid-presentation.
 
-## 5. Media
+## Media
 
 ```css
 img, video, svg {
