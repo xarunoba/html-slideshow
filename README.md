@@ -8,6 +8,8 @@ navigation, fullscreen, overview, hash deep-links, print-to-PDF) lives in
 `base.css` + `base.js`; a Bun build bundles + minifies everything into one file
 that opens in any browser.
 
+[Demo — Powered by rawgit.hack](https://raw.githack.com/xarunoba/html-slideshow/main/skills/html-slideshow/examples/quickstart-standalone.html)
+
 **Requires [Bun](https://bun.sh) as a runtime dependency.**
 
 ## Install
