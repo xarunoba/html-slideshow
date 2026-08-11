@@ -51,8 +51,8 @@ are never cropped by mobile browser chrome.
 ```
 skills/html-slideshow/
 ├── SKILL.md
-├── assets/
-│   ├── base.html              # page skeleton (empty deck — copy this)
+├── assets/                    # copy the contents
+│   ├── base.html              # page skeleton (empty deck)
 │   ├── base.css               # engine styles
 │   └── base.js                # engine logic
 ├── examples/
