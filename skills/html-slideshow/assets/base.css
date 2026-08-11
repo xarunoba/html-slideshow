@@ -7,6 +7,11 @@
         ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
     --chrome: clamp(0.8rem, 1.6svh, 1.25rem);
+
+    /* Slide canvas ratio (w/h). Portrait frames render at this landscape
+       resolution and zoom to fit — set both to change it (e.g. 4 / 3). */
+    --slide-w: 16;
+    --slide-h: 9;
 }
 [data-theme="dark"] {
     --bg: #0e1116;
@@ -64,6 +69,8 @@ body {
     scroll-behavior: smooth;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
+    container-type: size;
+    container-name: deck;
 }
 .deck::-webkit-scrollbar {
     display: none;
@@ -95,6 +102,43 @@ body {
     }
 }
 
+@container deck (orientation: portrait) {
+    /*
+       A portrait frame would otherwise reflow a landscape slide into a tall,
+       narrow box — shrinking type (sized in cqw) and overflowing wide content
+       such as multi-column tables.
+
+       Two tiers keep the natural landscape view:
+       (1) No-JS baseline (here): hold the slide to its landscape canvas
+           (--slide-w / --slide-h) and letterbox it. Shape and proportions stay
+           correct; type sized in cqw stays landscape-consistent.
+       (2) JS enhancement (.is-portrait below): render the slide at full
+           landscape resolution and zoom it to fit the frame width, so even
+           wide content lays out exactly as on a landscape screen. base.js
+           toggles .is-portrait from a measured aspect ratio (correct in
+           iframes) and sets --fit-zoom.
+    */
+    .slide {
+        flex-basis: 100%;
+        width: 100%;
+        height: auto;
+        aspect-ratio: var(--slide-w) / var(--slide-h);
+        align-self: center;
+    }
+}
+
+
+.deck.is-portrait > .slide {
+    /* Lay out at the full landscape canvas (frame-height × ratio), then zoom
+       down to fit the frame width. cqw/cqh resolve to the unzoomed box, so
+       content renders at landscape scale and scales together — no overflow. */
+    flex: 0 0 auto;
+    width: calc(100svh * var(--slide-w) / var(--slide-h));
+    height: 100svh;
+    zoom: var(--fit-zoom, 1);
+    aspect-ratio: auto;
+    align-self: center;
+}
 .slide--center {
     align-items: center;
     text-align: center;
@@ -379,6 +423,8 @@ button:focus-visible {
         padding: 6%;
         background: #fff !important;
         color: #111 !important;
+        aspect-ratio: auto;
+        align-self: auto;
     }
     .slide pre {
         background: #f4f4f4 !important;

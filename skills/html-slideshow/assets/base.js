@@ -146,6 +146,38 @@
     else document.exitFullscreen?.();
   }
 
+  // --- Portrait fit -----------------------------------------------------
+  // A portrait frame reflows a landscape slide into a narrow box, so wide
+  // content (tables, grids) overflows. When the deck reads portrait, lay each
+  // slide out at full landscape resolution (frame-height × --slide-w/--slide-h)
+  // and zoom it down to fit the frame width (see `.deck.is-portrait > .slide`
+  // in base.css). cqw/cqh resolve to the unzoomed box, so content renders at
+  // landscape scale and scales together — the slide looks exactly as it does
+  // on a landscape screen. Measuring the deck (not the viewport) keeps this
+  // correct when the deck lives in an iframe or split pane.
+  const supportsPortraitFit =
+    typeof CSS !== "undefined" &&
+    !!CSS.supports &&
+    CSS.supports("height: 100svh") &&
+    CSS.supports("zoom: 1");
+
+  function fitPortrait() {
+    if (!supportsPortraitFit) return;
+    const w = deck.clientWidth;
+    const h = deck.clientHeight;
+    if (!w || !h) return;
+    if (h > w) {
+      const root = getComputedStyle(document.documentElement);
+      const sw = parseFloat(root.getPropertyValue("--slide-w")) || 16;
+      const sh = parseFloat(root.getPropertyValue("--slide-h")) || 9;
+      deck.style.setProperty("--fit-zoom", String(w / (h * (sw / sh))));
+      deck.classList.add("is-portrait");
+    } else {
+      deck.classList.remove("is-portrait");
+      deck.style.removeProperty("--fit-zoom");
+    }
+  }
+
   document.addEventListener("keydown", (e) => {
     if (
       e.target instanceof Element &&
@@ -228,6 +260,16 @@
     toggleOverview();
   });
 
+  window.addEventListener("resize", fitPortrait);
+  window.addEventListener("orientationchange", fitPortrait);
+  // Drop the portrait canvas while printing — @media print lays slides out one
+  // per page at its own size; the zoomed landscape canvas would fight that.
+  window.addEventListener("beforeprint", () => {
+    deck.classList.remove("is-portrait");
+    deck.style.removeProperty("--fit-zoom");
+  });
+  window.addEventListener("afterprint", fitPortrait);
+
   function fromHash() {
     const h = location.hash.slice(1);
     if (!h) return null;
@@ -248,6 +290,7 @@
     renderDots(current);
     observe();
     setActive(current);
+    fitPortrait();
   }).observe(deck, { childList: true });
 
   if (!sessionStorage.getItem("slHintSeen")) {
@@ -258,6 +301,7 @@
     }, 5000);
   }
 
+  fitPortrait();
   renderDots(0);
   observe();
   goTo(fromHash() ?? 0, false);

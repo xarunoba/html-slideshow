@@ -66,6 +66,25 @@ body, .deck, .slide { height: 100svh; }   /* base.html ships a 100vh fallback */
 Avoid `dvh`/`lvh` for the frame: they resize as mobile chrome slides in and out
 and make slides jump mid-presentation.
 
+## Portrait frames
+
+A portrait viewport (a phone held upright, or a tall iframe) would reflow a
+landscape slide into a tall, narrow box — shrinking type sized in `cqw` and
+overflowing wide content (multi-column tables, grids). The engine handles this
+automatically: in a portrait frame each slide renders at its **natural landscape
+canvas** and is scaled (centre-fit) into the frame, so content lays out exactly
+as on a landscape screen. You author the same way; nothing about your slides
+changes.
+
+- The canvas ratio is `--slide-w` / `--slide-h` on `:root` (default `16 / 9`).
+  Set both to change it for every slide (e.g. `4 / 3` for a squarer canvas).
+- `base.js` toggles `.is-portrait` from the deck's *measured* aspect (so it's
+  correct inside an iframe or split pane, not just the top window) and sets
+  `--fit-zoom`. With JS off, a CSS `@container` baseline still letterboxes the
+  slide to the right shape.
+- The frame colour shows above and below the letterboxed slide; give the body a
+  distinct `background` if you want a visible border.
+
 ## Media
 
 ```css

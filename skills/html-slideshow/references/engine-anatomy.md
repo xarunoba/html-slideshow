@@ -24,10 +24,11 @@ comment-free; this map is the documentation):
 
 | Section | Selectors | Notes |
 |---|---|---|
-| **Design tokens** | `:root`, `[data-theme="dark|light"]` | `--font-*`, `--chrome`; per theme `--bg --fg --muted --accent --code-bg --rule --chrome-bg --chrome-fg`. **Restyle here, not elsewhere.** |
+| **Design tokens** | `:root`, `[data-theme="dark|light"]` | `--font-*`, `--chrome`, `--slide-w`/`--slide-h` (portrait canvas ratio); per theme `--bg --fg --muted --accent --code-bg --rule --chrome-bg --chrome-fg`. **Restyle here, not elsewhere.** |
 | **Reset / frame** | `html,body` | `100svh` (+ `100vh` `@supports` fallback). |
-| **Deck** | `.deck` | `display:flex`; `scroll-snap-type:x mandatory`; `scroll-behavior:smooth`; hidden scrollbar. |
+| **Deck** | `.deck` | `display:flex`; `scroll-snap-type:x mandatory`; `scroll-behavior:smooth`; hidden scrollbar; **`container-type:size`** (named `deck`, so its orientation can be queried). |
 | **Slide** | `.slide` | `flex:0 0 100%`; `scroll-snap-align:start`; **`container-type:size`** (so `cqw`/`cqh` resolve to the slide). Helpers: `.slide--center/-top/-bottom/-full`. |
+| **Portrait fit** | `@container deck (orientation:portrait)`, `.deck.is-portrait > .slide` | A portrait frame holds each slide to its **landscape canvas** (`--slide-w`/`--slide-h`) instead of reflowing it tall and narrow. CSS letterboxes via `aspect-ratio` (no-JS baseline); base.js adds `.is-portrait` + `--fit-zoom` to render at full landscape resolution and `zoom` to fit the width — so wide tables/grids lay out as on a landscape screen. Overview's `zoom` wins when both apply. |
 | **Fluid type** | `.slide h1–h3, p, li, .lead, pre/code, img/video/svg, blockquote, .stat, hr` | All sizes `clamp(min, Ncqw, max)`. **No `px`.** |
 | **Columns** | `.cols` | `auto-fit` grid for two-up content. |
 | **Focus** | `a:focus-visible, button:focus-visible` | keyboard ring. |
@@ -62,6 +63,11 @@ comment-free; this map is the documentation):
   are added/removed.
 - **Init** — `scrollRestoration="manual"`, render dots, observe,
   `goTo(fromHash() ?? 0, false)`, focus deck.
+- **Portrait fit** — `fitPortrait()` measures the deck; when portrait it adds
+  `.is-portrait` and sets `--fit-zoom` so each slide renders at landscape
+  resolution and zooms to fit the frame width. Runs on init, `resize`,
+  `orientationchange`, and child-list changes; `beforeprint` drops it so print
+  keeps one-slide-per-page. Guarded by `CSS.supports`.
 
 ## Build
 
@@ -79,4 +85,6 @@ assets into the `.html`, minified, emitting one self-contained file.
 - **New slide layout** → a class scoped under `.slide` (container units); add a
   recipe to `slide-patterns.md`.
 - **Keep it responsive** → never introduce `px` (see `responsive-units.md`).
+- **Slide canvas ratio (portrait)** → `--slide-w` / `--slide-h` on `:root`
+  (default `16`/`9`). Only affects portrait frames.
 - **Add an example** → drop a filled deck in `examples/`.

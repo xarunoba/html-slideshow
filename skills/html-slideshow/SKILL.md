@@ -28,6 +28,9 @@ produce the final file. **Requires [Bun](https://bun.sh).**
    screen. `px`/`pt` break responsiveness — don't use them (the outer frame uses
    `svh`). This is the one rule agents get wrong; full guide in
    `references/responsive-units.md`.
+   Portrait viewports are handled for you: slides render at their landscape
+   canvas and scale to fit, so wide tables/grids never overflow a phone screen
+   (`--slide-w`/`--slide-h` on `:root`, default `16`/`9`).
 5. **Build** — `bun build --compile --target=browser --minify my-deck.html --outdir dist` →
    `dist/my-deck.html`: a single, minified, self-contained file with the CSS, JS,
    and any referenced assets inlined. **This is the file you distribute.**
