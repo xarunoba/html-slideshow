@@ -10,7 +10,17 @@ that opens in any browser. **Requires [Bun](https://bun.sh).**
 
 ## Install
 
-TODO
+Not on a registry — it's just files. Clone it:
+
+```sh
+git clone https://github.com/xarunoba/html-slideshow.git
+```
+
+Then make `skills/html-slideshow/` available to your agent as the
+`html-slideshow` skill (how you do that depends on your harness — point it at
+the directory, or copy/symlink it into wherever your agent loads skills from).
+The only runtime dependency is [Bun](https://bun.sh)
+(`curl -fsSL https://bun.sh/install | bash`).
 
 ## Use
 
@@ -22,8 +32,10 @@ Ask your agent something like *"make a slideshow presenting …"* and it will:
 4. Size content with container-query units + `clamp()` (no fixed `px`).
 5. Build with `bun build` → one self-contained, minified `.html`.
 
-See `skills/html-slideshow/SKILL.md` for the full workflow, and `references/`
-for setup, slide recipes, and the responsive-units guide.
+See `skills/html-slideshow/SKILL.md` for the full workflow. `references/`
+covers the rest: `using-the-deck.md` (setup), `slide-patterns.md` (slide
+recipes), `responsive-units.md` (sizing units), `engine-anatomy.md` (the
+`base.*` engine internals), and `bundling-assets.md` (the one-file build).
 
 ## Why it's responsive
 
